@@ -1,0 +1,76 @@
+import React, { useEffect, useState } from 'react'
+import { Card } from 'react-bootstrap'
+import 'boxicons'
+import { userTransactionAPI } from '../services/allAPI'
+// const obj =[
+//     {   name:'Savings',
+//         color: '#f9c74f',
+        
+//     },
+//     {   name:'Investment',
+//         color: '#f9c74f',
+       
+//     },
+//     {   name:'Expense',
+//         color: '#f9c74f',
+        
+//     }
+// ]
+const[userTransactions,setUserTransactions] = useState([])
+console.log(userTransactions);
+useEffect(()=>{
+  getUserTransactions()
+},[])
+
+const getUserTransactions=async()=>{
+    const token = sessionStorage.getItem("token")
+    if(token){
+        const reqHeader={
+            "Authorization":`Bearer ${token}`
+        }
+        try{
+            const result = await userTransactionAPI(reqHeader)
+            console.log(result);
+            if(result.status==200){
+                setUserTransactions(result.data)
+            }
+            
+        }catch(err){
+            console.log(err);
+            
+        }
+    }
+}
+export default function History() {
+  return (
+    <>
+   <div className="d-flex py-6 flex-column gap-3">
+    <h1 className="py-4 text-center">History</h1>
+    {obj.map((v,i)=><Transaction key={i} category={v}></Transaction>)}
+    
+
+   </div>
+    </>
+  )
+}
+
+function Transaction({category}){
+    if(!category) return null
+    return(
+//         <div className='d-flex align-items-center justify-content-center'>
+//             <div className="item d-flex justify-content-between  rounded shadow" style={{ height:'30px',width:'70%',borderRight:`8px solid ${category.color??"#e5e5e5"}`}}>
+
+// <button ><box-icon name="trash" color={category.color??"#e5e5e5"}></box-icon></button>
+// <span>{category.name??""}</span>
+
+// </div>
+//         </div>
+   <Card  className='shadow'>
+      
+      <Card.Body>
+        <Card.Title>title</Card.Title>
+        
+      </Card.Body>
+    </Card>
+    )
+}
